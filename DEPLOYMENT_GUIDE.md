@@ -11,6 +11,35 @@ This guide walks you through deploying Sheldon's website to AWS using Terraform.
 
 ## Step 1: Configure AWS Credentials
 
+### Option A: Use Local Environment File (Recommended for Development)
+
+```bash
+# Copy the example file
+cp .env.local.example .env.local
+
+# Edit with your AWS credentials (NOT COMMITTED TO GIT)
+nano .env.local
+```
+
+Contents of `.env.local`:
+
+```bash
+export AWS_ACCESS_KEY_ID="AKIA..."
+export AWS_SECRET_ACCESS_KEY="..."
+export AWS_DEFAULT_REGION="us-east-1"
+```
+
+Before running Terraform, source this file:
+
+```bash
+source .env.local
+terraform plan
+```
+
+**Security:** `.env.local` is gitignored and will never be committed.
+
+### Option B: Use AWS CLI Config
+
 ```bash
 # Create an IAM user with programmatic access (Access Key ID + Secret Access Key)
 # https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html
@@ -22,7 +51,7 @@ aws configure
 # Default output format: json (optional)
 ```
 
-Or set environment variables:
+### Option C: Set Environment Variables Directly
 
 ```bash
 export AWS_ACCESS_KEY_ID="your-access-key"
@@ -52,7 +81,15 @@ environment       = "prod"
 
 ## Step 3: Initialize Terraform
 
+Before running Terraform, ensure your AWS credentials are loaded:
+
 ```bash
+# Load local environment file
+source .env.local
+
+# Or if using AWS CLI config, skip this step
+
+# Initialize Terraform
 cd terraform
 terraform init
 ```
@@ -159,39 +196,44 @@ aws cloudfront create-invalidation \
 
 ## Automating Deployments with GitHub Actions
 
-To automate the upload and cache invalidation on every `git push`, create `.github/workflows/deploy.yml`:
+The workflow file `.github/workflows/deploy.yml` is already included in the project. It automatically:
 
-```yaml
-name: Deploy to AWS
+1. Syncs `public/` files to S3 on every push to `main` branch
+2. Invalidates CloudFront cache
+3. Optionally applies Terraform changes if commit includes `[terraform]` tag
 
-on:
-  push:
-    branches:
-      - main
-    paths:
-      - 'public/**'
+### Setting Up GitHub Secrets
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: aws-actions/configure-aws-credentials@v2
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-1
-      - name: Sync to S3
-        run: |
-          aws s3 sync public/ s3://sheldon-fitness-XXXXXXXXXX/ --delete
-      - name: Invalidate CloudFront
-        run: |
-          aws cloudfront create-invalidation \
-            --distribution-id XXXXXXXXXX \
-            --paths "/*"
+1. Go to your GitHub repo → **Settings** → **Secrets and variables** → **Actions**
+2. Click **New repository secret**
+3. Add these secrets:
+   - `AWS_ACCESS_KEY_ID` — Your AWS access key
+   - `AWS_SECRET_ACCESS_KEY` — Your AWS secret key
+
+### Workflow Triggers
+
+- **Website deployment:** Push to `main` branch with changes to `public/` directory
+- **Terraform apply:** Commit message includes `[terraform]` (e.g., `git commit -m "[terraform] update caching rules"`)
+
+### Manual Website Deployment (without GitHub)
+
+If you prefer not to use GitHub Actions:
+
+```bash
+source .env.local  # Load AWS credentials
+aws s3 sync public/ s3://sheldon-fitness-XXXXXXXXXX/ --delete
+aws cloudfront create-invalidation --distribution-id XXXXXXXXXX --paths "/*"
 ```
 
-Then add your AWS credentials as GitHub secrets.
+### GitHub Actions Environment
+
+The workflow uses a `production` environment to add approval gates (optional):
+
+1. Go to **Settings** → **Environments**
+2. Create an environment named `production`
+3. Optionally require approval before deployments
+
+Removing the `environment: production` line disables approval gates.
 
 ## Destroying the Infrastructure (if needed)
 
