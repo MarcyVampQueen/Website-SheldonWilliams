@@ -188,42 +188,53 @@ aws cloudfront create-invalidation \
 
 The workflow file `.github/workflows/deploy.yml` is already included in the project. It automatically:
 
-1. Syncs `public/` files to S3 on every push to `main` branch
-2. Invalidates CloudFront cache
-3. Optionally applies Terraform changes if commit includes `[terraform]` tag
+1. **Syncs `public/` files to S3** on every push to `main` branch
+2. **Invalidates CloudFront cache** automatically
+3. **Optionally applies Terraform changes** via manual dispatch (workflow_dispatch)
 
 ### Setting Up GitHub Secrets
 
 1. Go to your GitHub repo → **Settings** → **Secrets and variables** → **Actions**
 2. Click **New repository secret**
 3. Add these secrets:
-   - `AWS_ACCESS_KEY_ID` — Your AWS access key
-   - `AWS_SECRET_ACCESS_KEY` — Your AWS secret key
+   - `AWS_ACCESS_KEY_ID` — Your AWS IAM access key
+   - `AWS_SECRET_ACCESS_KEY` — Your AWS IAM secret key
 
 ### Workflow Triggers
 
-- **Website deployment:** Push to `main` branch with changes to `public/` directory
-- **Terraform apply:** Commit message includes `[terraform]` (e.g., `git commit -m "[terraform] update caching rules"`)
+**Website deployment (automatic):**
+- Push to `main` branch with changes to `public/` directory
+- Website files sync to S3 and CloudFront cache invalidates automatically
+
+**Terraform deployment (manual):**
+1. Go to your GitHub repo → **Actions** tab
+2. Click **Deploy to AWS** workflow
+3. Click **Run workflow** button
+4. Check **Apply Terraform changes?** toggle
+5. Click **Run workflow**
+
+The Terraform job will run `terraform plan`, show the changes, then apply them.
 
 ### Manual Website Deployment (without GitHub)
 
 If you prefer not to use GitHub Actions:
 
 ```bash
-source .env.local  # Load AWS credentials
+aws configure  # If you haven't already
+
 aws s3 sync public/ s3://sheldon-fitness-XXXXXXXXXX/ --delete
 aws cloudfront create-invalidation --distribution-id XXXXXXXXXX --paths "/*"
 ```
 
 ### GitHub Actions Environment
 
-The workflow uses a `production` environment to add approval gates (optional):
+The workflow uses a `production` environment. You can optionally require approval before deployments:
 
 1. Go to **Settings** → **Environments**
 2. Create an environment named `production`
-3. Optionally require approval before deployments
+3. Enable **Required reviewers** to require approval before deployments
 
-Removing the `environment: production` line disables approval gates.
+Removing the `environment: production` line from the workflow disables this.
 
 ## Destroying the Infrastructure (if needed)
 

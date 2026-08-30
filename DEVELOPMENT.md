@@ -123,7 +123,7 @@ terraform state show aws_s3_bucket.website  # Show details of a resource
 ### Committing Code
 
 ```bash
-# Stage only website files
+# Stage website files
 git add public/
 
 # Or stage everything except secrets
@@ -132,16 +132,19 @@ git commit -m "Update homepage content"
 git push origin main
 ```
 
-### Triggering Terraform Apply via GitHub
+Website changes automatically sync to S3 and CloudFront invalidates.
 
-To apply Terraform changes via GitHub Actions:
+### Manual Terraform Deployments via GitHub Actions
 
-```bash
-git commit -m "[terraform] update cloudfront caching rules"
-git push origin main
-```
+To apply Terraform infrastructure changes:
 
-The `[terraform]` tag triggers the Terraform apply job (requires approval in GitHub).
+1. Go to your GitHub repo → **Actions** tab
+2. Click **Deploy to AWS** workflow (on the left)
+3. Click **Run workflow** button
+4. Check **Apply Terraform changes?** toggle
+5. Click **Run workflow**
+
+The workflow will show `terraform plan` output, then apply the changes. This is safer than automatic deployments—infrastructure changes are explicit and intentional.
 
 ## Troubleshooting
 
