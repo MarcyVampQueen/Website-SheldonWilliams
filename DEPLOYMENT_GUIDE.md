@@ -11,52 +11,37 @@ This guide walks you through deploying Sheldon's website to AWS using Terraform.
 
 ## Step 1: Configure AWS Credentials
 
-### Option A: Use Local Environment File (Recommended for Development)
+### Primary Method: Use AWS CLI Config (Recommended)
+
+Create an IAM user with programmatic access first:
+1. Go to [AWS IAM Console](https://console.aws.amazon.com/iam/)
+2. Click **Users** → **Create user**
+3. Name: `sheldon-dev` or similar
+4. Click **Create**
+5. Go to the user → **Security credentials** → **Create access key**
+6. Select **Command Line Interface (CLI)**
+7. Copy the Access Key ID and Secret Access Key
+
+Then configure AWS CLI:
 
 ```bash
-# Copy the example file
-cp .env.local.example .env.local
-
-# Edit with your AWS credentials (NOT COMMITTED TO GIT)
-nano .env.local
-```
-
-Contents of `.env.local`:
-
-```bash
-export AWS_ACCESS_KEY_ID="AKIA..."
-export AWS_SECRET_ACCESS_KEY="..."
-export AWS_DEFAULT_REGION="us-east-1"
-```
-
-Before running Terraform, source this file:
-
-```bash
-source .env.local
-terraform plan
-```
-
-**Security:** `.env.local` is gitignored and will never be committed.
-
-### Option B: Use AWS CLI Config
-
-```bash
-# Create an IAM user with programmatic access (Access Key ID + Secret Access Key)
-# https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html
-
 aws configure
 # Enter your Access Key ID when prompted
 # Enter your Secret Access Key when prompted
-# Default region: us-east-1 (required for CloudFront)
+# Default region: us-west-2
 # Default output format: json (optional)
 ```
 
-### Option C: Set Environment Variables Directly
+Your credentials are stored securely in `~/.aws/credentials` (local machine only, never committed).
+
+### Alternative: Use Environment Variables
+
+If you prefer environment variables:
 
 ```bash
 export AWS_ACCESS_KEY_ID="your-access-key"
 export AWS_SECRET_ACCESS_KEY="your-secret-key"
-export AWS_DEFAULT_REGION="us-east-1"
+export AWS_DEFAULT_REGION="us-west-2"
 ```
 
 ## Step 2: Prepare Terraform Variables
@@ -74,25 +59,22 @@ Example `terraform.tfvars`:
 ```hcl
 domain_name       = "sheldon-fitness.com"
 certificate_email = "admin@sheldon-fitness.com"
-aws_region        = "us-east-1"
+aws_account_id    = "179174776097"
+aws_region        = "us-west-2"  # S3 and primary resources. ACM certificate always in us-east-1.
 project_name      = "sheldon-fitness"
 environment       = "prod"
 ```
 
 ## Step 3: Initialize Terraform
 
-Before running Terraform, ensure your AWS credentials are loaded:
+Initialize Terraform:
 
 ```bash
-# Load local environment file
-source .env.local
-
-# Or if using AWS CLI config, skip this step
-
-# Initialize Terraform
 cd terraform
 terraform init
 ```
+
+Terraform will automatically use credentials from `aws configure`.
 
 ## Note on Regions
 

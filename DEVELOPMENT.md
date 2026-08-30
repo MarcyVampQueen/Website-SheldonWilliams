@@ -9,56 +9,37 @@ This file explains how to set up your local development environment for working 
 git clone <your-repo-url>
 cd Sheldon\'s\ Website
 
-# 2. Set up local AWS credentials
-cp .env.local.example .env.local
-# Edit .env.local with your AWS credentials
-nano .env.local
+# 2. Configure AWS CLI with IAM user credentials
+aws configure
+# Enter Access Key ID, Secret Access Key, region (us-west-2), output format (json)
 
-# 3. Source the environment
-source .env.local
-
-# 4. Test Terraform
+# 3. Test Terraform
 cd terraform
 terraform init
 terraform plan
 
-# 5. Verify website content
+# 4. Verify website content
 cd ..
 python3 -m http.server 8000
 # Visit http://localhost:8000 in your browser
 ```
 
-## Environment Files
-
-### `.env.local` (Local Development)
-
-**Never commit this file.** It contains your personal AWS credentials.
-
-Create from the example:
-
-```bash
-cp .env.local.example .env.local
-```
-
-Fill in your AWS credentials:
-
-```bash
-export AWS_ACCESS_KEY_ID="AKIA..."
-export AWS_SECRET_ACCESS_KEY="your-secret-key"
-export AWS_DEFAULT_REGION="us-east-1"
-```
-
-Before running any AWS commands, load it:
-
-```bash
-source .env.local
-```
-
-### `.env.local.example` (Template)
-
-This file is committed to git. It shows the structure of `.env.local` without exposing secrets. Use it as a template.
-
 ## AWS Credentials
+
+### Using AWS CLI Config (Recommended)
+
+Your credentials are stored in `~/.aws/credentials` after running `aws configure`. This is the standard AWS approach and works automatically with Terraform.
+
+```bash
+aws configure
+# Enter:
+# AWS Access Key ID: AKIA...
+# AWS Secret Access Key: [your secret]
+# Default region: us-west-2
+# Default output format: json
+```
+
+No additional setup needed—Terraform will read from `~/.aws/credentials` automatically.
 
 ### Creating an IAM User
 
@@ -69,7 +50,7 @@ This file is committed to git. It shows the structure of `.env.local` without ex
 5. Go to the user → **Security credentials** → **Create access key**
 6. Select **Command Line Interface (CLI)**
 7. Copy the Access Key ID and Secret Access Key
-8. Paste into `.env.local`
+8. Run `aws configure` and paste them in
 
 ### Required IAM Permissions
 
@@ -97,7 +78,6 @@ Then visit `http://localhost:8000` in your browser. Changes to files in `public/
 ### Planning Changes
 
 ```bash
-source .env.local
 cd terraform
 terraform plan
 ```
@@ -110,7 +90,6 @@ Review the plan carefully. It shows:
 ### Applying Changes
 
 ```bash
-source .env.local
 cd terraform
 terraform apply
 ```
@@ -130,19 +109,13 @@ terraform state show aws_s3_bucket.website  # Show details of a resource
 
 ### Before Pushing
 
-1. Verify `.env.local` is not staged:
-   ```bash
-   git status | grep .env
-   # Should show nothing
-   ```
-
-2. Verify Terraform state files are not staged:
+1. Verify Terraform state files are not staged:
    ```bash
    git status | grep .tfstate
    # Should show nothing
    ```
 
-3. Test your changes locally:
+2. Test your changes locally:
    ```bash
    python3 -m http.server 8000
    ```
@@ -174,19 +147,14 @@ The `[terraform]` tag triggers the Terraform apply job (requires approval in Git
 
 ### "AccessDenied" Error
 
-Your AWS credentials are missing or invalid.
+Your AWS credentials are missing or invalid. Verify they are configured:
 
 ```bash
-echo $AWS_ACCESS_KEY_ID
-# Should output your key, not be empty
+aws sts get-caller-identity
+# Should output your AWS account ID and IAM user ARN
 ```
 
-If empty, load the environment:
-
-```bash
-source .env.local
-echo $AWS_ACCESS_KEY_ID
-```
+If this fails, run `aws configure` again and enter your Access Key ID and Secret Access Key.
 
 ### Terraform State Lock
 
@@ -197,7 +165,6 @@ If you see a "resource is locked" error, check for other developers applying cha
 After syncing, invalidate the CloudFront cache:
 
 ```bash
-source .env.local
 cd terraform
 aws cloudfront create-invalidation \
   --distribution-id $(terraform output -raw cloudfront_distribution_id) \
@@ -221,9 +188,6 @@ The `.github/workflows/deploy.yml` workflow will then automatically deploy on ev
 ## Common Commands
 
 ```bash
-# Load environment
-source .env.local
-
 # Preview site locally
 python3 -m http.server 8000
 
