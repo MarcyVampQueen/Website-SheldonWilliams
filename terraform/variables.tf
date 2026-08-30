@@ -5,9 +5,9 @@ variable "domain_name" {
 }
 
 variable "aws_region" {
-  description = "AWS region for the S3 bucket. CloudFront is global."
+  description = "AWS region for S3 bucket and primary resources (CloudFront is global; ACM certificate always in us-east-1)"
   type        = string
-  default     = "us-east-1"
+  default     = "us-west-2"
 }
 
 variable "certificate_email" {
@@ -39,4 +39,10 @@ variable "max_ttl" {
   description = "Max cache TTL in seconds for CloudFront"
   type        = number
   default     = 604800  # 7 days
+}
+
+variable "aws_account_id" {
+  description = "AWS account ID for resource naming"
+  type        = string
+  default     = "179174776097"
 }

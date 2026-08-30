@@ -10,7 +10,7 @@ terraform {
   # backend "s3" {
   #   bucket         = "sheldon-fitness-terraform-state"
   #   key            = "prod/terraform.tfstate"
-  #   region         = "us-east-1"
+  #   region         = "us-west-2"
   #   encrypt        = true
   #   dynamodb_table = "terraform-locks"
   # }
@@ -29,12 +29,26 @@ provider "aws" {
   }
 }
 
+# ACM certificates for CloudFront must be in us-east-1 (AWS requirement)
+provider "aws" {
+  alias  = "us_east_1"
+  region = "us-east-1"
+
+  default_tags {
+    tags = {
+      Project     = var.project_name
+      Environment = var.environment
+      ManagedBy   = "Terraform"
+    }
+  }
+}
+
 # ============================================================================
 # S3 Bucket for Static Website Content
 # ============================================================================
 
 resource "aws_s3_bucket" "website" {
-  bucket              = "${var.project_name}-${data.aws_caller_identity.current.account_id}"
+  bucket              = "${var.project_name}-${var.aws_account_id}"
   force_destroy       = false  # Prevent accidental deletion
 }
 
@@ -105,6 +119,7 @@ resource "aws_cloudfront_origin_access_control" "website" {
 # ============================================================================
 
 resource "aws_acm_certificate" "website" {
+  provider          = aws.us_east_1
   domain_name       = var.domain_name
   validation_method = "DNS"
 
@@ -117,7 +132,7 @@ resource "aws_acm_certificate" "website" {
   }
 }
 
-# Route 53 validation records for ACM certificate
+# Route 53 validation records for ACM certificate (in primary region)
 resource "aws_route53_record" "cert_validation" {
   for_each = {
     for dvo in aws_acm_certificate.website.domain_validation_options : dvo.domain_name => {
@@ -135,6 +150,8 @@ resource "aws_route53_record" "cert_validation" {
   zone_id         = aws_route53_zone.website[0].zone_id
 
   depends_on = [aws_route53_zone.website]
+
+  # Note: Route 53 is global, so this works from any region
 }
 
 resource "aws_acm_certificate_validation" "website" {
@@ -240,8 +257,6 @@ resource "aws_route53_record" "website_www" {
 # ============================================================================
 # Data Sources
 # ============================================================================
-
-data "aws_caller_identity" "current" {}
 
 data "aws_cloudfront_cache_policy" "managed_caching_optimized" {
   name = "Managed-CachingOptimized"

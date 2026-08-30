@@ -3,6 +3,7 @@
 
 domain_name       = "sheldon-fitness.com"  # Replace with Sheldon's actual domain
 certificate_email = "admin@sheldon-fitness.com"
-aws_region        = "us-east-1"
+aws_account_id    = "179174776097"
+aws_region        = "us-west-2"  # S3 and primary resources. ACM certificate always in us-east-1.
 project_name      = "sheldon-fitness"
 environment       = "prod"

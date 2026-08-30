@@ -94,6 +94,14 @@ cd terraform
 terraform init
 ```
 
+## Note on Regions
+
+- **S3 bucket and most resources** are deployed to `us-west-2` (Oregon)
+- **ACM SSL certificate** must be in `us-east-1` (AWS requirement for CloudFront)
+  - Terraform uses a provider alias (`aws.us_east_1`) to handle this automatically
+  - This does not affect performance; CloudFront serves from edge locations globally
+- **Route 53** is global; DNS records work from any region
+
 This downloads the AWS provider and prepares the working directory.
 
 ## Step 4: Review the Deployment Plan
