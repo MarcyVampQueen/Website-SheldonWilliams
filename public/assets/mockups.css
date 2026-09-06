@@ -74,7 +74,7 @@ button { font: inherit; }
 .muted { opacity: .65; }
 
 /* Shared concept shell */
-.site-shell { min-height: 100vh; overflow: hidden; }
+.site-shell { min-height: 100vh; }
 .site-nav { position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 20px; padding: 21px clamp(20px, 5vw, 68px); }
 .brand { display: inline-flex; align-items: center; gap: 11px; text-decoration: none; font-weight: 700; letter-spacing: -.02em; }
 .brand .pine-mark { height: 27px; gap: 0; }
