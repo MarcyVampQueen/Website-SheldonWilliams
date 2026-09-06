@@ -20,6 +20,7 @@ terraform plan
 
 # 4. Verify website content
 cd ..
+cd public
 python3 -m http.server 8000
 # Visit http://localhost:8000 in your browser
 ```
@@ -68,6 +69,7 @@ The IAM user needs these policies:
 Preview the website locally without deploying:
 
 ```bash
+cd public
 python3 -m http.server 8000
 ```
 

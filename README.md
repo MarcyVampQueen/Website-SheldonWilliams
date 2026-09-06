@@ -88,6 +88,7 @@ This is an engineering starting point, not legal or regulatory advice. Confirm a
 Node is not required for the initial version. The site can be previewed with Python's built-in server once the first HTML files are added:
 
 ```bash
+cd public
 python3 -m http.server 8000
 ```
 
