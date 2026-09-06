@@ -336,6 +336,60 @@ button { font: inherit; }
 .street .payment-band .btn--solid { background: #111b1b; color: #e9d83b; border-color: #111b1b; }
 .street .site-footer { border-color: #e9d83b; }
 
+/* Daybreak Club: crisp editorial with playful color */
+.daybreak { background: #f5f0e4; color: #153b2d; font-family: 'Space Grotesk', sans-serif; }
+.daybreak .site-nav { background: #f5f0e4; border-bottom: 1px solid rgba(21,59,45,.2); }
+.daybreak .brand { text-transform: uppercase; font-size: .84rem; font-weight: 700; letter-spacing: -.04em; }
+.daybreak .brand .pine-mark { color: #e26636; }
+.daybreak .nav-cta { border: 2px solid #153b2d; border-radius: 3px; box-shadow: 3px 3px 0 #e6c943; }
+.daybreak .hero { grid-template-columns: .82fr 1.18fr; gap: 7%; min-height: 700px; align-items: stretch; padding-top: 40px; padding-bottom: 70px; overflow: clip; }
+.daybreak .hero-copy { align-self: center; padding: 30px 0; }
+.daybreak .hero-copy h1, .daybreak .section-heading h2, .daybreak .about-copy h2, .daybreak .reset-copy h2, .daybreak .payment-grid h2 { font-family: 'Space Grotesk', sans-serif; text-transform: uppercase; font-weight: 700; letter-spacing: -.11em; }
+.daybreak .hero-copy h1 { font-size: clamp(3.8rem, 8vw, 8.5rem); line-height: .82; }
+.daybreak .hero-copy p { max-width: 430px; }
+.daybreak .hero-art { position: relative; min-height: 620px; background: #e6c943; padding: 24px 24px 72px; }
+.daybreak .hero-art::before { content: 'THE BODY IS A PLACE TO BEGIN'; position: absolute; z-index: 1; left: 42px; bottom: 25px; color: #153b2d; font: .67rem 'DM Mono', monospace; letter-spacing: .08em; }
+.daybreak .hero-art::after { content: '✳'; position: absolute; right: -35px; top: 35px; color: #e26636; font-size: 8rem; line-height: 1; }
+.daybreak .hero-art img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; opacity: .7; }
+.daybreak .section { border-top: 1px solid rgba(21,59,45,.2); }
+.daybreak .section-heading h2 { font-size: clamp(2.8rem, 6vw, 6.3rem); }
+.daybreak .section--accent { background: #e9d8cf; }
+.daybreak .section--accent .page-wrap { display: grid; grid-template-columns: .62fr 1.38fr; gap: clamp(30px, 7vw, 100px); align-items: start; }
+.daybreak .section--accent .section-heading { position: sticky; top: 25px; margin: 0; }
+.daybreak .service-grid { grid-template-columns: 1fr 1fr; background: none; border: 0; gap: 16px; }
+.daybreak .service-card { min-height: 250px; padding: 24px; background: #f5f0e4; border: 1px solid rgba(21,59,45,.2); }
+.daybreak .service-card:nth-child(2) { background: #153b2d; color: #f5f0e4; transform: translateY(44px); }
+.daybreak .service-card:nth-child(3) { grid-column: 1 / -1; min-height: 175px; background: #3da66b; }
+.daybreak .service-card p { color: inherit; opacity: .78; }
+.daybreak .service-index { color: #e26636; font-weight: 600; }
+.daybreak .about-grid { grid-template-columns: .72fr 1.28fr; gap: clamp(30px, 8vw, 125px); align-items: center; }
+.daybreak .about-photo { background: #e26636; padding: 12px; transform: rotate(-2deg); }
+.daybreak .about-photo img { filter: grayscale(1) contrast(1.1); mix-blend-mode: multiply; }
+.daybreak .about-copy h2 { font-size: clamp(3rem, 6vw, 6.3rem); }
+.daybreak .quote { border-color: #e6c943; font-family: 'Space Grotesk', sans-serif; font-weight: 600; }
+.daybreak .reset-card { grid-template-columns: 1.25fr .75fr; border: 1px solid #153b2d; }
+.daybreak .video-placeholder { background: #3da66b; }
+.daybreak .reset-copy { background: #e6c943; color: #153b2d; }
+.daybreak .reset-copy h2 { font-size: clamp(2rem, 4vw, 4rem); }
+.daybreak .price-grid { grid-template-columns: .8fr 1.2fr; gap: 16px; align-items: start; }
+.daybreak .price-card { border: 1px solid rgba(21,59,45,.26); background: transparent; }
+.daybreak .price-card:first-child { margin-top: 55px; }
+.daybreak .price-card:last-child { grid-column: 2; }
+.daybreak .price-card--featured { background: #153b2d; color: #f5f0e4; border-color: #153b2d; transform: none; }
+.daybreak .price-card p { color: inherit; opacity: .72; }
+.daybreak .payment-band { background: #e26636; color: #153b2d; }
+.daybreak .payment-band .page-wrap { display: grid; grid-template-columns: 1.2fr .8fr; gap: 30px; }
+.daybreak .payment-actions { display: grid; justify-content: stretch; }
+.daybreak .payment-actions .btn { width: 100%; }
+.daybreak .payment-band .btn--solid { background: #153b2d; color: #e6c943; }
+.daybreak .site-footer { border-color: rgba(21,59,45,.2); }
+
+/* Daybreak gallery preview */
+.preview-daybreak { background: #e6c943; color: #153b2d; }
+.preview-daybreak strong { font-family: 'Space Grotesk', sans-serif; text-transform: uppercase; letter-spacing: -.09em; }
+.preview-sun { align-self: end; color: #e26636; font-size: 3.7rem; line-height: .8; transform: rotate(17deg); }
+.preview-daybreak::after { content: ''; position: absolute; width: 115px; height: 115px; right: 22px; top: 70px; border: 2px solid #3da66b; border-radius: 50%; }
+
 /* Gallery previews for new concepts */
 .preview-guide { background: #b7cba7; color: var(--forest); }
 .preview-guide strong { font-family: 'Fraunces', serif; }
@@ -391,6 +445,16 @@ button { font: inherit; }
   .studio .reset-card, .street .reset-card { grid-template-columns: 1fr; transform: none; }
   .studio .price-card:first-child, .studio .price-card:last-child { margin-top: 0; grid-column: auto; }
   .street .payment-band .payment-actions { display: flex; }
+  .daybreak .section--accent .page-wrap, .daybreak .payment-band .page-wrap { display: block; }
+  .daybreak .section--accent .section-heading { position: static; margin-bottom: 42px; }
+  .daybreak .service-grid, .daybreak .price-grid { grid-template-columns: 1fr; }
+  .daybreak .service-card:nth-child(2) { transform: none; }
+  .daybreak .service-card:nth-child(3), .daybreak .price-card:last-child { grid-column: auto; }
+  .daybreak .price-card:first-child { margin-top: 0; }
+  .daybreak .reset-card { grid-template-columns: 1fr; }
+  .daybreak .hero-art { min-height: 390px; max-height: 500px; }
+  .daybreak .hero-art::after { right: -15px; font-size: 5rem; }
+  .daybreak .payment-actions { display: flex; }
 }
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
