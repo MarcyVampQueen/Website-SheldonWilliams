@@ -248,6 +248,90 @@ button { font: inherit; }
 .trail .payment-band .btn--solid { background: var(--forest-deep); color: var(--yellow); }
 .trail .site-footer { border-color: rgba(247,244,235,.2); color: #bfcebd; }
 
+/* Field Guide: multi-page concept */
+.guide { background: #f2eee3; color: #21382b; font-family: 'DM Sans', sans-serif; }
+.guide .site-nav { background: #173c2d; color: #f7f4eb; }
+.guide .brand { font-family: 'Fraunces', serif; }
+.guide .brand .pine-mark { color: #b7cba7; }
+.guide .nav-cta { border-color: #b7cba7; }
+.guide .hero { grid-template-columns: 1fr 1fr; gap: 8%; min-height: 630px; }
+.guide .hero-copy h1, .guide .section-heading h2, .guide .about-copy h2, .guide .reset-copy h2, .guide .payment-grid h2 { font-family: 'Fraunces', serif; letter-spacing: -.07em; }
+.guide .hero-copy h1 { font-size: clamp(3.8rem, 8vw, 8.6rem); }
+.guide .hero-art { min-height: 525px; background: #bdcdb8; padding: 14px 14px 42px; transform: rotate(-2deg); }
+.guide .hero-art img { width: 100%; height: 100%; object-fit: cover; mix-blend-mode: multiply; opacity: .72; }
+.guide .hero-art::after { content: 'image placeholder / replace with studio photo'; position: absolute; bottom: 14px; left: 20px; color: var(--forest); font: .6rem 'DM Mono', monospace; text-transform: uppercase; }
+.guide .section-heading h2 { font-size: clamp(2.5rem, 5vw, 5.3rem); }
+.guide .section--soft { background: #e0e8d9; }
+.guide .service-grid { background: none; border: 0; gap: 14px; }
+.guide .service-card { border-top: 3px solid var(--forest); background: transparent; padding: 25px 0; }
+.guide .about-photo { background: #c6d3bd; padding: 12px 12px 42px; transform: rotate(2deg); }
+.guide .about-photo::after { content: 'add Sheldon portrait'; position: absolute; bottom: 12px; left: 20px; font: .6rem 'DM Mono', monospace; text-transform: uppercase; }
+.guide .about-photo .image-note { display: none; }
+.guide .reset-card { border: 1px solid var(--forest); }
+.guide .video-placeholder { background: var(--forest); }
+.guide .reset-copy { background: #b7cba7; }
+.guide .price-card { background: transparent; border: 0; border-top: 3px solid var(--forest); padding-left: 0; padding-right: 0; }
+.guide .price-card--featured { background: var(--forest); color: var(--cream); border: 0; padding: 27px; transform: none; }
+.guide .payment-band { background: #c86b3e; }
+.guide .subnav { background: #d7e1cf; border-bottom: 1px solid rgba(33,56,43,.2); }
+.guide .subnav .page-wrap { display: flex; justify-content: space-between; gap: 14px; padding-top: 12px; padding-bottom: 12px; }
+.guide .subnav a { font-size: .78rem; text-decoration: none; }
+.guide .subnav a[aria-current="page"] { font-weight: 700; text-decoration: underline; text-underline-offset: 5px; }
+.guide .page-title { padding: 86px 0 74px; background: #e0e8d9; }
+.guide .page-title h1 { margin: 12px 0 0; font: 600 clamp(3rem, 7vw, 7.2rem)/.92 'Fraunces', serif; letter-spacing: -.08em; }
+.guide .page-title p:last-child { max-width: 520px; }
+
+/* Street Set: 90s street concept */
+.street { background: #111b1b; color: #f6f0dd; font-family: 'Space Grotesk', sans-serif; }
+.street .site-nav { background: #e9d83b; color: #111b1b; border-bottom: 4px solid #111b1b; }
+.street .brand { text-transform: uppercase; font-weight: 700; letter-spacing: -.06em; }
+.street .brand .pine-mark { color: #e65d31; }
+.street .nav-cta { border: 3px solid #111b1b; border-radius: 2px; box-shadow: 4px 4px 0 #111b1b; }
+.street .hero { min-height: 730px; display: flex; align-items: center; padding: 74px 0; position: relative; }
+.street .hero::before { content: 'MOVE'; position: absolute; right: -2vw; top: 8%; color: #e65d31; font: 700 clamp(8rem, 24vw, 24rem)/.7 'Space Grotesk', sans-serif; letter-spacing: -.15em; transform: rotate(-9deg); opacity: .8; }
+.street .hero::after { content: ''; position: absolute; width: 230px; height: 230px; right: 14%; bottom: 8%; border: 6px solid #3da66b; border-radius: 50%; box-shadow: 8px 8px 0 #e9d83b; transform: rotate(12deg); }
+.street .hero-copy { position: relative; z-index: 1; max-width: 750px; }
+.street .hero h1, .street .section-heading h2, .street .about-copy h2, .street .reset-copy h2, .street .payment-grid h2 { font-family: 'Space Grotesk', sans-serif; text-transform: uppercase; font-weight: 700; letter-spacing: -.12em; }
+.street .hero h1 { font-size: clamp(4rem, 12vw, 12rem); line-height: .78; }
+.street .hero p { max-width: 460px; font-weight: 500; color: #c4d2c3; }
+.street .btn { border-radius: 2px; border: 3px solid #111b1b; box-shadow: 5px 5px 0 #111b1b; }
+.street .btn--light { background: #f6f0dd; color: #111b1b; }
+.street .btn--outline { border-color: #f6f0dd; box-shadow: 5px 5px 0 #e65d31; }
+.street .section { border-top: 4px solid #e9d83b; }
+.street .section-heading h2 { font-size: clamp(3rem, 8vw, 8rem); }
+.street .service-grid { background: #e9d83b; border: 4px solid #111b1b; gap: 4px; }
+.street .service-card { background: #f6f0dd; color: #111b1b; min-height: 245px; border: 0; }
+.street .service-card:nth-child(2) { background: #e65d31; color: #f6f0dd; }
+.street .service-card:nth-child(3) { background: #3da66b; color: #111b1b; }
+.street .service-card p { color: inherit; opacity: .82; }
+.street .service-index { color: inherit; font-weight: 700; }
+.street .about-grid { grid-template-columns: 1.1fr .9fr; }
+.street .about-copy { order: -1; }
+.street .about-photo { background: #e65d31; border: 4px solid #e9d83b; padding: 12px; transform: rotate(3deg); }
+.street .about-photo img { filter: grayscale(1) contrast(1.2); mix-blend-mode: multiply; }
+.street .about-copy h2 { font-size: clamp(3rem, 7vw, 7rem); }
+.street .quote { border-color: #e9d83b; font-family: 'Space Grotesk', sans-serif; font-size: 1.15rem; font-weight: 700; }
+.street .reset-card { border: 4px solid #e9d83b; }
+.street .video-placeholder { background: #3da66b; }
+.street .reset-copy { background: #e9d83b; color: #111b1b; }
+.street .price-card { border: 3px solid #f6f0dd; background: #111b1b; }
+.street .price-card--featured { background: #e65d31; border-color: #e9d83b; transform: rotate(-2deg); }
+.street .price-card p { color: #c4d2c3; }
+.street .price-card--featured p { color: #111b1b; }
+.street .payment-band { background: #3da66b; color: #111b1b; }
+.street .payment-band .btn--solid { background: #111b1b; color: #e9d83b; border-color: #111b1b; }
+.street .site-footer { border-color: #e9d83b; }
+
+/* Gallery previews for new concepts */
+.preview-guide { background: #b7cba7; color: var(--forest); }
+.preview-guide strong { font-family: 'Fraunces', serif; }
+.preview-map { align-self: end; font-size: 3rem; transform: rotate(-15deg); }
+.preview-guide::after { content: ''; position: absolute; width: 130px; height: 190px; border: 1px solid rgba(23,60,45,.45); right: 20px; top: 55px; transform: rotate(12deg); }
+.preview-street { background: #e9d83b; color: #111b1b; }
+.preview-street strong { font-family: 'Space Grotesk', sans-serif; text-transform: uppercase; letter-spacing: -.1em; }
+.preview-sticker { align-self: end; background: #e65d31; color: #f6f0dd; border: 2px solid #111b1b; padding: 8px; font: 700 .65rem 'Space Grotesk', sans-serif; transform: rotate(-8deg); box-shadow: 3px 3px 0 #111b1b; }
+.preview-street::after { content: '★'; position: absolute; right: 22px; top: 55px; color: #3da66b; font-size: 4rem; transform: rotate(15deg); }
+
 @media (max-width: 760px) {
   .gallery-header { padding: 48px 20px 36px; }
   .gallery-main { padding: 0 20px 55px; }
@@ -279,6 +363,11 @@ button { font: inherit; }
   .site-footer { flex-direction: column; padding: 24px 20px; }
   .trail .hero { min-height: 680px; padding-bottom: 56px; }
   .trail .hero::before, .trail .hero::after { inset: 0; }
+  .guide .hero { min-height: auto; }
+  .guide .subnav .page-wrap { overflow-x: auto; justify-content: flex-start; }
+  .street .hero::before { right: -18vw; top: 20%; font-size: 9rem; }
+  .street .hero::after { width: 130px; height: 130px; right: 8%; bottom: 18%; }
+  .street .about-copy { order: 0; }
 }
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
