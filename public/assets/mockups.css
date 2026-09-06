@@ -458,3 +458,220 @@ button { font: inherit; }
 }
 
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
+
+/* Playground alternate art direction: 80s running poster */
+.daybreak {
+  --poster-ink: #172b48;
+  --poster-paper: #f3ead5;
+  --poster-orange: #f05b32;
+  --poster-yellow: #e8d74b;
+  --poster-mint: #9dc3aa;
+  background: var(--poster-paper);
+  color: var(--poster-ink);
+  font-family: 'Space Grotesk', sans-serif;
+  position: relative;
+}
+.daybreak::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  pointer-events: none;
+  opacity: .13;
+  background-image: radial-gradient(rgba(23,43,72,.72) .65px, transparent .8px);
+  background-size: 4px 4px;
+  mix-blend-mode: multiply;
+}
+.daybreak .site-nav {
+  background: var(--poster-yellow);
+  color: var(--poster-ink);
+  border-bottom: 5px solid var(--poster-ink);
+  padding-top: 17px;
+  padding-bottom: 17px;
+}
+.daybreak .brand {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: .9rem;
+  font-weight: 700;
+  letter-spacing: -.07em;
+  text-transform: uppercase;
+}
+.daybreak .brand .pine-mark { color: var(--poster-orange); }
+.daybreak .nav-cta {
+  border: 3px solid var(--poster-ink);
+  border-radius: 0;
+  box-shadow: 4px 4px 0 var(--poster-orange);
+  text-transform: uppercase;
+}
+.daybreak .hero {
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  max-width: none;
+  min-height: 730px;
+  padding: 0;
+  background: var(--poster-paper);
+  overflow: clip;
+}
+.daybreak .hero-copy {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(35px, 7vw, 100px) clamp(20px, 7vw, 105px);
+  background: var(--poster-paper);
+  position: relative;
+}
+.daybreak .hero-copy::before {
+  content: 'RUN / PLAY / REPEAT';
+  position: absolute;
+  left: clamp(20px, 7vw, 105px);
+  top: 24px;
+  font: 500 .65rem 'DM Mono', monospace;
+  letter-spacing: .12em;
+}
+.daybreak .hero-copy::after {
+  content: '07';
+  position: absolute;
+  right: 8%;
+  bottom: -2%;
+  color: var(--poster-orange);
+  font: 700 clamp(9rem, 19vw, 20rem)/.75 'Space Grotesk', sans-serif;
+  letter-spacing: -.18em;
+  opacity: .9;
+}
+.daybreak .hero-copy > * { position: relative; z-index: 1; }
+.daybreak .hero-copy h1,
+.daybreak .section-heading h2,
+.daybreak .about-copy h2,
+.daybreak .reset-copy h2,
+.daybreak .payment-grid h2 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: -.13em;
+}
+.daybreak .hero-copy h1 {
+  max-width: 680px;
+  margin: 25px 0 24px;
+  font-size: clamp(4.2rem, 9vw, 10.2rem);
+  line-height: .76;
+}
+.daybreak .hero-copy p { max-width: 390px; font-weight: 500; }
+.daybreak .hero-art {
+  min-height: 730px;
+  padding: 0;
+  background: var(--poster-mint);
+  position: relative;
+  overflow: hidden;
+}
+.daybreak .hero-art::before {
+  content: 'THE MOVEMENT PROJECT';
+  position: absolute;
+  z-index: 2;
+  left: 28px;
+  top: 27px;
+  color: var(--poster-paper);
+  font: 700 .75rem 'DM Mono', monospace;
+  letter-spacing: .1em;
+  writing-mode: vertical-rl;
+  text-transform: uppercase;
+}
+.daybreak .hero-art::after {
+  content: '✳';
+  position: absolute;
+  right: -28px;
+  bottom: 25px;
+  color: var(--poster-yellow);
+  font-size: 10rem;
+  line-height: .7;
+  text-shadow: 5px 5px 0 var(--poster-orange);
+}
+.daybreak .hero-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(.8) sepia(.15);
+  mix-blend-mode: multiply;
+  opacity: .56;
+}
+.daybreak .section { border-top: 5px solid var(--poster-ink); }
+.daybreak .section--accent {
+  background: var(--poster-orange);
+  color: var(--poster-paper);
+  position: relative;
+}
+.daybreak .section--accent::after {
+  content: 'KEEP MOVING';
+  position: absolute;
+  right: -20px;
+  bottom: 30px;
+  color: var(--poster-yellow);
+  font: 700 5rem/.8 'Space Grotesk', sans-serif;
+  letter-spacing: -.13em;
+  transform: rotate(-90deg);
+  opacity: .8;
+}
+.daybreak .section--accent .page-wrap { display: block; }
+.daybreak .section--accent .section-heading { max-width: 820px; }
+.daybreak .section-heading h2 { font-size: clamp(3.1rem, 7vw, 8rem); line-height: .8; }
+.daybreak .section--accent .section-heading p:last-child { max-width: 460px; }
+.daybreak .service-grid { grid-template-columns: 1fr 1fr 1fr; gap: 5px; background: var(--poster-ink); border: 5px solid var(--poster-ink); }
+.daybreak .service-card {
+  min-height: 270px;
+  padding: 25px;
+  background: var(--poster-paper);
+  color: var(--poster-ink);
+  border: 0;
+}
+.daybreak .service-card:nth-child(2) { background: var(--poster-yellow); color: var(--poster-ink); transform: translateY(30px); }
+.daybreak .service-card:nth-child(3) { background: var(--poster-mint); color: var(--poster-ink); grid-column: auto; min-height: 270px; }
+.daybreak .service-card h3 { margin-top: 48px; font-size: 1.35rem; text-transform: uppercase; letter-spacing: -.08em; }
+.daybreak .service-card p { color: inherit; opacity: .8; }
+.daybreak .service-index { color: var(--poster-orange); font-weight: 700; }
+.daybreak .about-grid { grid-template-columns: .9fr 1.1fr; gap: 0; align-items: stretch; }
+.daybreak .about-photo { min-height: 560px; margin: 0; padding: 18px 18px 60px; background: var(--poster-yellow); transform: none; }
+.daybreak .about-photo img { filter: grayscale(1) contrast(1.15); mix-blend-mode: multiply; }
+.daybreak .about-photo .image-note { left: 28px; bottom: 20px; background: transparent; padding: 0; font-weight: 600; }
+.daybreak .about-copy { padding: 50px clamp(25px, 7vw, 100px); background: var(--poster-ink); color: var(--poster-paper); }
+.daybreak .about-copy h2 { font-size: clamp(3.2rem, 6.5vw, 7.4rem); line-height: .8; }
+.daybreak .quote { border-color: var(--poster-orange); font-family: 'Space Grotesk', sans-serif; font-weight: 600; }
+.daybreak .reset-card { grid-template-columns: 1fr 1fr; border: 5px solid var(--poster-ink); transform: rotate(-1deg); }
+.daybreak .video-placeholder { background: var(--poster-mint); }
+.daybreak .video-placeholder img { filter: grayscale(1) contrast(.85); mix-blend-mode: multiply; opacity: .6; }
+.daybreak .reset-copy { background: var(--poster-yellow); color: var(--poster-ink); padding: clamp(27px, 5vw, 60px); }
+.daybreak .reset-copy h2 { font-size: clamp(2.3rem, 5vw, 5.2rem); line-height: .8; }
+.daybreak .price-grid { grid-template-columns: 1fr 1fr 1fr; gap: 5px; background: var(--poster-ink); border: 5px solid var(--poster-ink); }
+.daybreak .price-card { min-height: 315px; border: 0; border-radius: 0; background: var(--poster-paper); color: var(--poster-ink); }
+.daybreak .price-card:first-child, .daybreak .price-card:last-child { margin-top: 0; }
+.daybreak .price-card:nth-child(2) { background: var(--poster-orange); color: var(--poster-paper); }
+.daybreak .price-card--featured { background: var(--poster-orange); color: var(--poster-paper); border-color: var(--poster-orange); transform: translateY(-23px); }
+.daybreak .price-card p { color: inherit; opacity: .8; }
+.daybreak .payment-band { background: var(--poster-ink); color: var(--poster-paper); border-top: 5px solid var(--poster-yellow); }
+.daybreak .payment-band .page-wrap { display: grid; grid-template-columns: 1.25fr .75fr; }
+.daybreak .payment-actions { display: grid; justify-content: stretch; }
+.daybreak .payment-actions .btn { width: 100%; border-radius: 0; border: 3px solid var(--poster-paper); box-shadow: 4px 4px 0 var(--poster-orange); }
+.daybreak .payment-band .btn--solid { background: var(--poster-yellow); color: var(--poster-ink); border-color: var(--poster-yellow); }
+.daybreak .site-footer { background: var(--poster-yellow); border-color: var(--poster-ink); color: var(--poster-ink); }
+
+/* Playground poster preview */
+.preview-daybreak { background: var(--yellow); color: var(--forest-deep); }
+.preview-daybreak strong { font-family: 'Space Grotesk', sans-serif; text-transform: uppercase; letter-spacing: -.13em; }
+.preview-sun { align-self: end; color: var(--orange); font-size: 3.7rem; line-height: .8; transform: rotate(17deg); }
+.preview-daybreak::after { content: '07'; position: absolute; right: 12px; top: 45px; color: var(--orange); font: 700 6rem/.8 'Space Grotesk', sans-serif; opacity: .8; }
+
+@media (max-width: 760px) {
+  .daybreak .hero { display: block; min-height: auto; }
+  .daybreak .hero-copy { min-height: 550px; padding-top: 90px; }
+  .daybreak .hero-art { min-height: 410px; max-height: 500px; }
+  .daybreak .hero-art::after { right: -25px; font-size: 7rem; }
+  .daybreak .section--accent::after { display: none; }
+  .daybreak .service-grid, .daybreak .price-grid { grid-template-columns: 1fr; }
+  .daybreak .service-card:nth-child(2) { transform: none; }
+  .daybreak .service-card:nth-child(3) { grid-column: auto; }
+  .daybreak .about-grid, .daybreak .payment-band .page-wrap { display: block; }
+  .daybreak .about-photo { min-height: 390px; }
+  .daybreak .about-copy { padding: 62px 20px; }
+  .daybreak .reset-card { grid-template-columns: 1fr; transform: none; }
+  .daybreak .price-card--featured { transform: none; }
+  .daybreak .payment-actions { display: flex; }
+}
