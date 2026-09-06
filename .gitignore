@@ -31,3 +31,5 @@ terraform/.env
 dist/
 build/
 coverage/
+
+to_do.md
