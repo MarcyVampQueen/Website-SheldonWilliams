@@ -457,6 +457,62 @@ button { font: inherit; }
   .daybreak .payment-actions { display: flex; }
 }
 
+  /* Trail Notes: Trailhead structure with Field Notes typewriter voice */
+  .trail-notes { background: #f7eedd; color: #27382c; font-family: 'DM Mono', monospace; }
+  .trail-notes .site-nav { background: #f7eedd; border-bottom: 1px dashed rgba(39,56,44,.5); }
+  .trail-notes .brand { font-family: 'DM Mono', monospace; font-size: .78rem; text-transform: uppercase; }
+  .trail-notes .brand .pine-mark { color: #c4673d; }
+  .trail-notes .nav-cta { border-color: #27382c; border-radius: 0; }
+  .trail-notes .hero { min-height: 730px; display: flex; align-items: end; padding-bottom: 78px; position: relative; }
+  .trail-notes .hero::before { content: 'FIELD REPORT / 008'; position: absolute; top: 38px; right: 0; color: #f7eedd; font-size: .7rem; letter-spacing: .1em; z-index: 2; }
+  .trail-notes .hero::after { content: ''; position: absolute; inset: 0 0 0 38%; background: rgba(39,56,44,.24); pointer-events: none; }
+  .trail-notes .hero { background: linear-gradient(90deg, #27382c 0 38%, transparent 38%), url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1500&q=80') 70% center/cover; }
+  .trail-notes .hero-copy { position: relative; z-index: 1; max-width: 790px; }
+  .trail-notes .hero h1, .trail-notes .section-heading h2, .trail-notes .about-copy h2, .trail-notes .reset-copy h2, .trail-notes .payment-grid h2 { font-family: 'DM Mono', monospace; font-weight: 400; letter-spacing: -.1em; }
+  .trail-notes .hero h1 { font-size: clamp(3.4rem, 9vw, 9rem); line-height: .82; }
+  .trail-notes .hero p { max-width: 490px; color: #e7e0cd; font-size: .86rem; }
+  .trail-notes .eyebrow, .trail-notes .service-index, .trail-notes .video-note { font-size: .67rem; letter-spacing: .08em; text-transform: uppercase; }
+  .trail-notes .section { border-top: 1px dashed rgba(39,56,44,.5); }
+  .trail-notes .section-heading h2 { font-size: clamp(2.7rem, 6vw, 6.2rem); line-height: .86; }
+  .trail-notes .service-grid { background: rgba(39,56,44,.4); border: 1px dashed #27382c; gap: 1px; }
+  .trail-notes .service-card { background: transparent; min-height: 250px; }
+  .trail-notes .service-card:nth-child(2) { background: #e6c94f; color: #27382c; }
+  .trail-notes .service-card:nth-child(3) { background: #d7ab8f; color: #27382c; }
+  .trail-notes .service-card p { color: inherit; opacity: .8; font-size: .78rem; }
+  .trail-notes .service-card h3 { font-family: 'DM Mono', monospace; font-weight: 400; text-transform: uppercase; letter-spacing: -.08em; }
+  .trail-notes .service-index { color: #c4673d; }
+  .trail-notes .about-grid { grid-template-columns: .9fr 1.1fr; align-items: end; }
+  .trail-notes .about-copy { order: -1; }
+  .trail-notes .about-photo { background: #d7ab8f; padding: 10px; transform: rotate(2deg) translateY(28px); }
+  .trail-notes .about-photo img { filter: sepia(.3) contrast(.95); }
+  .trail-notes .about-copy h2 { font-size: clamp(2.8rem, 6vw, 6.5rem); }
+  .trail-notes .quote { border-color: #c4673d; font-family: 'DM Mono', monospace; font-size: .93rem; }
+  .trail-notes .reset-card { border: 1px dashed #27382c; }
+  .trail-notes .video-placeholder { background: #27382c; }
+  .trail-notes .video-placeholder img { filter: sepia(.35) saturate(.8); }
+  .trail-notes .reset-copy { background: #e6c94f; }
+  .trail-notes .reset-copy h2 { font-size: clamp(2rem, 4vw, 4.2rem); }
+  .trail-notes .price-grid { background: rgba(39,56,44,.4); border: 1px dashed #27382c; gap: 1px; }
+  .trail-notes .price-card { border: 0; background: #f7eedd; min-height: 300px; }
+  .trail-notes .price-card--featured { background: #27382c; color: #f7eedd; transform: translateY(-13px); }
+  .trail-notes .price-card p { color: inherit; opacity: .78; font-size: .78rem; }
+  .trail-notes .price-card--featured p { color: #e7e0cd; }
+  .trail-notes .payment-band { background: #c4673d; color: #fff1da; }
+  .trail-notes .payment-band .btn { border-radius: 0; }
+  .trail-notes .site-footer { border-color: rgba(39,56,44,.35); }
+  .preview-trail-notes { background: #27382c; color: #f7eedd; font-family: 'DM Mono', monospace; }
+  .preview-trail-notes strong { font-family: 'DM Mono', monospace; font-weight: 400; letter-spacing: -.1em; }
+  .preview-trail-notes::after { content: ''; position: absolute; right: 24px; bottom: 26px; width: 84px; height: 84px; border: 1px dashed #e6c94f; border-radius: 50%; }
+  .preview-trail-notes .preview-stamp { color: #e6c94f; border-color: #e6c94f; font-family: 'DM Mono', monospace; text-align: center; line-height: 1.15; }
+
+  @media (max-width: 760px) {
+    .trail-notes .hero { min-height: 680px; padding-bottom: 56px; background: linear-gradient(rgba(39,56,44,.58), rgba(39,56,44,.58)), url('https://images.unsplash.com/photo-1517836357463-d25dfeac3438?auto=format&fit=crop&w=1000&q=80') center/cover; }
+    .trail-notes .hero::after { display: none; }
+    .trail-notes .about-copy { order: 0; }
+    .trail-notes .about-photo { transform: none; }
+    .trail-notes .price-card--featured { transform: none; }
+  }
+
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; animation-duration: .01ms !important; } }
 
 /* Playground alternate art direction: 80s running poster */
