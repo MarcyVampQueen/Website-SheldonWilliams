@@ -527,6 +527,24 @@ button { font: inherit; }
   font-family: 'Space Grotesk', sans-serif;
   position: relative;
 }
+
+/* Exact Trailhead layout, with only the Field Notes typeface changed */
+.trail-typewriter,
+.trail-typewriter .brand,
+.trail-typewriter .nav-links,
+.trail-typewriter .btn,
+.trail-typewriter .eyebrow,
+.trail-typewriter .hero h1,
+.trail-typewriter .section-heading h2,
+.trail-typewriter .about-copy h2,
+.trail-typewriter .reset-copy h2,
+.trail-typewriter .payment-grid h2,
+.trail-typewriter .service-card h3,
+.trail-typewriter .price-card h3,
+.trail-typewriter .price,
+.trail-typewriter .site-footer {
+  font-family: 'DM Mono', monospace;
+}
 .daybreak::before {
   content: '';
   position: fixed;
