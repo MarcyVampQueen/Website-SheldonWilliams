@@ -32,9 +32,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.11.4
+          terraform_wrapper: false
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
@@ -43,50 +44,19 @@ jobs:
           aws-region: us-west-2
           role-session-name: github-actions-deploy
 
-      - name: Prepare Terraform outputs
-        run: |
-          set -euo pipefail
-          cd terraform
-          terraform init -reconfigure
-          terraform output -json > tf-output.raw 2>/tmp/tf-output.err || {
-            echo "Terraform output failed"
-            cat /tmp/tf-output.err || true
-            exit 1
-          }
-          python3 - <<'PY'
-          from pathlib import Path
-
-          raw = Path('tf-output.raw').read_text(encoding='utf-8')
-          clean = '\n'.join(line for line in raw.splitlines() if not line.startswith('::'))
-          Path('tf-output.clean.json').write_text(clean, encoding='utf-8')
-          PY
-
       - name: Sync website files to S3
         run: |
           set -euo pipefail
           cd terraform
-          BUCKET_NAME=$(python3 - <<'PY'
-          import json
-          from pathlib import Path
-
-          data = json.loads(Path('tf-output.clean.json').read_text(encoding='utf-8'))
-          print(data['s3_bucket_name']['value'])
-          PY
-          )
+          terraform init -reconfigure
+          BUCKET_NAME=$(terraform output -raw s3_bucket_name)
           aws s3 sync ../public/ "s3://${BUCKET_NAME}/" --delete
 
       - name: Invalidate CloudFront cache
         run: |
           set -euo pipefail
           cd terraform
-          DIST_ID=$(python3 - <<'PY'
-          import json
-          from pathlib import Path
-
-          data = json.loads(Path('tf-output.clean.json').read_text(encoding='utf-8'))
-          print(data['cloudfront_distribution_id']['value'])
-          PY
-          )
+          DIST_ID=$(terraform output -raw cloudfront_distribution_id)
           aws cloudfront create-invalidation \
             --distribution-id "$DIST_ID" \
             --paths "/*"
@@ -105,9 +75,10 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Setup Terraform
-        uses: hashicorp/setup-terraform@v2
+        uses: hashicorp/setup-terraform@v3
         with:
           terraform_version: 1.11.4
+          terraform_wrapper: false
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
