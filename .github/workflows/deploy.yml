@@ -50,11 +50,19 @@ jobs:
           cd terraform
           terraform init -reconfigure
           terraform output -json > tf-output.raw 2>/tmp/tf-output.err
-          sed '/^::debug::/d' tf-output.raw > tf-output.json
-          BUCKET_NAME=$(python3 -c "import json; data=json.load(open('tf-output.json')); print(data['s3_bucket_name']['value'])")
-          DIST_ID=$(python3 -c "import json; data=json.load(open('tf-output.json')); print(data['cloudfront_distribution_id']['value'])")
-          echo "bucket_name=$BUCKET_NAME" >> "$GITHUB_OUTPUT"
-          echo "distribution_id=$DIST_ID" >> "$GITHUB_OUTPUT"
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          raw = Path('tf-output.raw').read_text(encoding='utf-8')
+          cleaned = '\n'.join(line for line in raw.splitlines() if not line.startswith('::'))
+          data = json.loads(cleaned)
+
+          with Path(os.environ['GITHUB_OUTPUT']).open('a', encoding='utf-8') as out:
+              out.write(f"bucket_name={data['s3_bucket_name']['value']}\n")
+              out.write(f"distribution_id={data['cloudfront_distribution_id']['value']}\n")
+          PY
 
       - name: Sync website files to S3
         run: |
