@@ -43,25 +43,20 @@ jobs:
           aws-region: us-west-2
           role-session-name: github-actions-deploy
 
-      - name: Get S3 bucket name from Terraform
-        id: tf_outputs
+      - name: Sync website files to S3
         run: |
           set -euo pipefail
           cd terraform
           terraform init -reconfigure
-          BUCKET_NAME=$(terraform output -raw s3_bucket_name | sed 's/::.*$//')
-          DIST_ID=$(terraform output -raw cloudfront_distribution_id | sed 's/::.*$//')
-          echo "bucket_name=$BUCKET_NAME" >> "$GITHUB_OUTPUT"
-          echo "distribution_id=$DIST_ID" >> "$GITHUB_OUTPUT"
-
-      - name: Sync website files to S3
-        run: |
-          aws s3 sync public/ s3://${{ steps.tf_outputs.outputs.bucket_name }}/ --delete
+          aws s3 sync ../public/ s3://$(terraform output -raw s3_bucket_name)/ --delete
 
       - name: Invalidate CloudFront cache
         run: |
+          set -euo pipefail
+          cd terraform
+          terraform init -reconfigure
           aws cloudfront create-invalidation \
-            --distribution-id ${{ steps.tf_outputs.outputs.distribution_id }} \
+            --distribution-id $(terraform output -raw cloudfront_distribution_id) \
             --paths "/*"
 
       - name: Deployment Success
