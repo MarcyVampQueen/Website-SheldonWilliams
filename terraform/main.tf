@@ -1,11 +1,13 @@
 terraform {
   required_version = ">= 1.0"
+
   required_providers {
     aws = {
       source  = "hashicorp/aws"
       version = "~> 5.0"
     }
   }
+
   # Uncomment after first apply to store state in S3 (optional but recommended)
   # backend "s3" {
   #   bucket         = "sheldon-fitness-terraform-state"
@@ -24,7 +26,6 @@ provider "aws" {
       Project     = var.project_name
       Environment = var.environment
       ManagedBy   = "Terraform"
-      CreatedAt   = timestamp()
     }
   }
 }
@@ -44,16 +45,17 @@ provider "aws" {
 }
 
 # ============================================================================
-# S3 Bucket for Static Website Content
+# S3 bucket for static website content
 # ============================================================================
 
 resource "aws_s3_bucket" "website" {
-  bucket              = "${var.project_name}-${var.aws_account_id}"
-  force_destroy       = false  # Prevent accidental deletion
+  bucket        = "${var.project_name}-${var.aws_account_id}"
+  force_destroy = false
 }
 
 resource "aws_s3_bucket_versioning" "website" {
   bucket = aws_s3_bucket.website.id
+
   versioning_configuration {
     status = "Enabled"
   }
@@ -115,12 +117,13 @@ resource "aws_cloudfront_origin_access_control" "website" {
 }
 
 # ============================================================================
-# ACM Certificate for HTTPS
+# Optional ACM certificate and Route 53 records for custom domains
 # ============================================================================
 
 resource "aws_acm_certificate" "website" {
-  provider          = aws.us_east_1
-  domain_name       = var.domain_name
+  count            = var.domain_name != "" ? 1 : 0
+  provider         = aws.us_east_1
+  domain_name      = var.domain_name
   validation_method = "DNS"
 
   lifecycle {
@@ -132,15 +135,23 @@ resource "aws_acm_certificate" "website" {
   }
 }
 
-# Route 53 validation records for ACM certificate (in primary region)
+resource "aws_route53_zone" "website" {
+  count = var.domain_name != "" ? 1 : 0
+  name  = var.domain_name
+
+  tags = {
+    Name = "${var.project_name}-zone"
+  }
+}
+
 resource "aws_route53_record" "cert_validation" {
-  for_each = {
-    for dvo in aws_acm_certificate.website.domain_validation_options : dvo.domain_name => {
+  for_each = var.domain_name != "" ? {
+    for dvo in aws_acm_certificate.website[0].domain_validation_options : dvo.domain_name => {
       name   = dvo.resource_record_name
       record = dvo.resource_record_value
       type   = dvo.resource_record_type
     }
-  }
+  } : {}
 
   allow_overwrite = true
   name            = each.value.name
@@ -150,12 +161,12 @@ resource "aws_route53_record" "cert_validation" {
   zone_id         = aws_route53_zone.website[0].zone_id
 
   depends_on = [aws_route53_zone.website]
-
-  # Note: Route 53 is global, so this works from any region
 }
 
 resource "aws_acm_certificate_validation" "website" {
-  certificate_arn           = aws_acm_certificate.website.arn
+  count      = var.domain_name != "" ? 1 : 0
+  certificate_arn = aws_acm_certificate.website[0].arn
+
   timeouts {
     create = "5m"
   }
@@ -164,7 +175,7 @@ resource "aws_acm_certificate_validation" "website" {
 }
 
 # ============================================================================
-# CloudFront Distribution
+# CloudFront distribution
 # ============================================================================
 
 resource "aws_cloudfront_distribution" "website" {
@@ -178,7 +189,6 @@ resource "aws_cloudfront_distribution" "website" {
   is_ipv6_enabled     = true
   default_root_object = "index.html"
 
-  # Error responses redirect 404 to index.html for SPA support (optional)
   custom_error_response {
     error_code            = 404
     error_caching_min_ttl = 300
@@ -203,9 +213,10 @@ resource "aws_cloudfront_distribution" "website" {
   }
 
   viewer_certificate {
-    acm_certificate_arn      = aws_acm_certificate.website.arn
-    ssl_support_method       = "sni-only"
-    minimum_protocol_version = "TLSv1.2_2021"
+    cloudfront_default_certificate = var.domain_name == ""
+    acm_certificate_arn           = var.domain_name == "" ? null : aws_acm_certificate.website[0].arn
+    ssl_support_method            = var.domain_name == "" ? null : "sni-only"
+    minimum_protocol_version      = var.domain_name == "" ? null : "TLSv1.2_2021"
   }
 
   tags = {
@@ -216,20 +227,11 @@ resource "aws_cloudfront_distribution" "website" {
 }
 
 # ============================================================================
-# Route 53 DNS Zone and Records
+# Optional Route 53 DNS records for a custom domain
 # ============================================================================
 
-resource "aws_route53_zone" "website" {
-  count = var.domain_name != "example.com" ? 1 : 0
-  name  = var.domain_name
-
-  tags = {
-    Name = "${var.project_name}-zone"
-  }
-}
-
 resource "aws_route53_record" "website_a" {
-  count   = var.domain_name != "example.com" ? 1 : 0
+  count   = var.domain_name != "" ? 1 : 0
   zone_id = aws_route53_zone.website[0].zone_id
   name    = var.domain_name
   type    = "A"
@@ -242,7 +244,7 @@ resource "aws_route53_record" "website_a" {
 }
 
 resource "aws_route53_record" "website_www" {
-  count   = var.domain_name != "example.com" ? 1 : 0
+  count   = var.domain_name != "" ? 1 : 0
   zone_id = aws_route53_zone.website[0].zone_id
   name    = "www.${var.domain_name}"
   type    = "A"
@@ -255,7 +257,7 @@ resource "aws_route53_record" "website_www" {
 }
 
 # ============================================================================
-# Data Sources
+# Data sources
 # ============================================================================
 
 data "aws_cloudfront_cache_policy" "managed_caching_optimized" {

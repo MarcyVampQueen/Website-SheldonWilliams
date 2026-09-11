@@ -9,40 +9,19 @@ This guide walks you through deploying Sheldon's website to AWS using Terraform.
 3. **Terraform:** Install from [terraform.io](https://www.terraform.io/downloads)
 4. **Domain Name:** Sheldon's chosen domain (e.g., `sheldon-fitness.com`). Preferably purchased and ready, or you can buy it from Route 53 after deploying the infrastructure.
 
-## Step 1: Configure AWS Credentials
+## Step 1: Configure GitHub Actions with an OIDC Role
 
-### Primary Method: Use AWS CLI Config (Recommended)
+For GitHub Actions, the better approach is to create an IAM role that GitHub can assume using OpenID Connect (OIDC). This avoids storing long-lived AWS access keys in GitHub secrets.
 
-Create an IAM user with programmatic access first:
-1. Go to [AWS IAM Console](https://console.aws.amazon.com/iam/)
-2. Click **Users** → **Create user**
-3. Name: `sheldon-dev` or similar
-4. Click **Create**
-5. Go to the user → **Security credentials** → **Create access key**
-6. Select **Command Line Interface (CLI)**
-7. Copy the Access Key ID and Secret Access Key
+### Local AWS CLI (optional)
 
-Then configure AWS CLI:
+If you want to run `aws s3 sync` or `terraform` locally on your machine, you can still use the AWS CLI with either:
+- an IAM user with programmatic access, or
+- AWS SSO / a profile configured locally
 
-```bash
-aws configure
-# Enter your Access Key ID when prompted
-# Enter your Secret Access Key when prompted
-# Default region: us-west-2
-# Default output format: json (optional)
-```
+That is separate from GitHub Actions.
 
-Your credentials are stored securely in `~/.aws/credentials` (local machine only, never committed).
 
-### Alternative: Use Environment Variables
-
-If you prefer environment variables:
-
-```bash
-export AWS_ACCESS_KEY_ID="your-access-key"
-export AWS_SECRET_ACCESS_KEY="your-secret-key"
-export AWS_DEFAULT_REGION="us-west-2"
-```
 
 ## Step 2: Prepare Terraform Variables
 
@@ -196,15 +175,18 @@ The workflow file `.github/workflows/deploy.yml` is already included in the proj
 
 1. Go to your GitHub repo → **Settings** → **Secrets and variables** → **Actions**
 2. Click **New repository secret**
-3. Add these secrets:
-   - `AWS_ACCESS_KEY_ID` — Your AWS IAM access key
-   - `AWS_SECRET_ACCESS_KEY` — Your AWS IAM secret key
+3. Add this secret:
+   - `AWS_ROLE_ARN` — The ARN of the IAM role created for GitHub OIDC
+
+No AWS access key or secret key is required in GitHub anymore.
 
 ### Workflow Triggers
 
 **Website deployment (automatic):**
 - Push to `main` branch with changes to `public/` directory
 - Website files sync to S3 and CloudFront cache invalidates automatically
+
+> This repo is currently using the `master` branch, so if you are deploying from `master`, make sure the OIDC trust policy includes `refs/heads/master` as well.
 
 **Terraform deployment (manual):**
 1. Go to your GitHub repo → **Actions** tab

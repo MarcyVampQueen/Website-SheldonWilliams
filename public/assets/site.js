@@ -1,5 +1,6 @@
 document.querySelectorAll('[data-menu-toggle]').forEach((toggle) => {
   const menu = document.getElementById(toggle.getAttribute('aria-controls'));
+
   toggle.addEventListener('click', () => {
     const isOpen = menu.classList.toggle('is-open');
     toggle.setAttribute('aria-expanded', String(isOpen));
