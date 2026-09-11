@@ -171,6 +171,12 @@ button { font: inherit; }
   max-width: 670px;
   margin-bottom: 42px;
 }
+#services .section-heading {
+  max-width: 100%;
+}
+#services .section-heading p {
+  max-width: 100%;
+}
 .section-heading h2,
 .about-copy h2,
 .reset-copy h2,
@@ -197,15 +203,31 @@ button { font: inherit; }
   background: transparent;
   padding: 29px;
   min-height: 245px;
+  border: 1px solid rgba(230, 201, 79, 0.12);
+  display: flex;
+  flex-direction: column;
 }
 .service-card h3 {
-  margin: 35px 0 9px;
+  margin: 0 0 9px;
   font-size: 1.13rem;
+  color: var(--yellow);
 }
+
+.service-card--accent {
+  background: rgba(230, 201, 79, 0.02);
+  border: 1px solid rgba(230, 201, 79, 0.18);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+  transform: translateY(-4px);
+}
+
 .service-card p {
   margin: 0;
   font-size: 0.91rem;
   color: #b8c9b7;
+}
+.service-card .btn {
+  margin-top: 20px;
+  align-self: flex-start;
 }
 .service-index {
   font-family: 'DM Mono', monospace;
@@ -317,7 +339,7 @@ button { font: inherit; }
 }
 .price-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 14px;
 }
 .price-card {
@@ -405,7 +427,6 @@ button { font: inherit; }
 .trail-typewriter .nav-links,
 .trail-typewriter .btn,
 .trail-typewriter .eyebrow,
-.trail-typewriter .hero h1,
 .trail-typewriter .section-heading h2,
 .trail-typewriter .about-copy h2,
 .trail-typewriter .reset-copy h2,
@@ -415,6 +436,12 @@ button { font: inherit; }
 .trail-typewriter .price,
 .trail-typewriter .site-footer {
   font-family: 'DM Mono', monospace;
+}
+
+@media (max-width: 1100px) {
+  .price-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }
 
 @media (max-width: 900px) {
