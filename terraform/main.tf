@@ -8,14 +8,13 @@ terraform {
     }
   }
 
-  # Uncomment after first apply to store state in S3 (optional but recommended)
-  # backend "s3" {
-  #   bucket         = "sheldon-fitness-terraform-state"
-  #   key            = "prod/terraform.tfstate"
-  #   region         = "us-west-2"
-  #   encrypt        = true
-  #   dynamodb_table = "terraform-locks"
-  # }
+  backend "s3" {
+    bucket      = "sheldon-fitness-terraform-state"
+    key         = "prod/terraform.tfstate"
+    region      = "us-west-2"
+    encrypt     = true
+    use_lockfile = true
+  }
 }
 
 provider "aws" {
