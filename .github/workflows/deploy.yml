@@ -43,20 +43,52 @@ jobs:
           aws-region: us-west-2
           role-session-name: github-actions-deploy
 
-      - name: Sync website files to S3
+      - name: Prepare Terraform outputs
         run: |
           set -euo pipefail
           cd terraform
           terraform init -reconfigure
-          aws s3 sync ../public/ s3://$(terraform output -raw s3_bucket_name)/ --delete
+          terraform output -json > tf-output.raw 2>/tmp/tf-output.err || {
+            echo "Terraform output failed"
+            cat /tmp/tf-output.err || true
+            exit 1
+          }
+          python3 - <<'PY'
+          from pathlib import Path
+
+          raw = Path('tf-output.raw').read_text(encoding='utf-8')
+          clean = '\n'.join(line for line in raw.splitlines() if not line.startswith('::'))
+          Path('tf-output.clean.json').write_text(clean, encoding='utf-8')
+          PY
+
+      - name: Sync website files to S3
+        run: |
+          set -euo pipefail
+          cd terraform
+          BUCKET_NAME=$(python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('tf-output.clean.json').read_text(encoding='utf-8'))
+          print(data['s3_bucket_name']['value'])
+          PY
+          )
+          aws s3 sync ../public/ "s3://${BUCKET_NAME}/" --delete
 
       - name: Invalidate CloudFront cache
         run: |
           set -euo pipefail
           cd terraform
-          terraform init -reconfigure
+          DIST_ID=$(python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          data = json.loads(Path('tf-output.clean.json').read_text(encoding='utf-8'))
+          print(data['cloudfront_distribution_id']['value'])
+          PY
+          )
           aws cloudfront create-invalidation \
-            --distribution-id $(terraform output -raw cloudfront_distribution_id) \
+            --distribution-id "$DIST_ID" \
             --paths "/*"
 
       - name: Deployment Success
