@@ -49,8 +49,8 @@ jobs:
           set -euo pipefail
           cd terraform
           terraform init -reconfigure
-          BUCKET_NAME=$(terraform output -raw s3_bucket_name)
-          DIST_ID=$(terraform output -raw cloudfront_distribution_id)
+          BUCKET_NAME=$(terraform output -raw s3_bucket_name | sed 's/::.*$//')
+          DIST_ID=$(terraform output -raw cloudfront_distribution_id | sed 's/::.*$//')
           echo "bucket_name=$BUCKET_NAME" >> "$GITHUB_OUTPUT"
           echo "distribution_id=$DIST_ID" >> "$GITHUB_OUTPUT"
 
