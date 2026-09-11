@@ -44,38 +44,19 @@ button { font: inherit; }
   display: inline-flex;
   align-items: center;
   gap: 11px;
-  text-decoration: none;
   font-weight: 700;
   letter-spacing: -0.02em;
   text-transform: uppercase;
   font-size: 0.83rem;
+  text-decoration: none;
 }
-.pine-mark {
-  display: flex;
-  align-items: end;
-  justify-content: center;
-  gap: 2px;
-  height: 27px;
-  color: currentColor;
+.brand-logo {
+  display: block;
+  width: 24px;
+  height: auto;
+  max-width: 24px;
+  object-fit: contain;
 }
-.pine-mark span {
-  width: 0;
-  height: 0;
-  border-left: 7px solid transparent;
-  border-right: 7px solid transparent;
-  border-bottom: 17px solid currentColor;
-  position: relative;
-}
-.pine-mark span::after {
-  content: '';
-  position: absolute;
-  width: 2px;
-  height: 5px;
-  left: -1px;
-  top: 15px;
-  background: currentColor;
-}
-.pine-mark span:nth-child(2) { transform: translateY(-5px) scale(1.2); }
 .nav-links {
   display: flex;
   align-items: center;
@@ -148,9 +129,9 @@ button { font: inherit; }
 }
 .hero h1 {
   margin: 16px 0 20px;
-  font-size: clamp(4rem, 11vw, 11.5rem);
-  line-height: 0.9;
-  letter-spacing: -0.12em;
+  font-size: clamp(2.6rem, 5vw, 5.8rem);
+  line-height: 0.96;
+  letter-spacing: -0.05em;
   text-transform: uppercase;
 }
 .hero p {
