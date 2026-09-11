@@ -48,10 +48,10 @@ jobs:
         run: |
           cd terraform
           terraform init
-          BUCKET_NAME=$(terraform output -raw s3_bucket_name)
-          DIST_ID=$(terraform output -raw cloudfront_distribution_id)
-          echo "bucket_name=$BUCKET_NAME" >> $GITHUB_OUTPUT
-          echo "distribution_id=$DIST_ID" >> $GITHUB_OUTPUT
+          BUCKET_NAME=$(terraform output -raw s3_bucket_name | head -n 1)
+          DIST_ID=$(terraform output -raw cloudfront_distribution_id | head -n 1)
+          echo "bucket_name=$BUCKET_NAME" >> "$GITHUB_OUTPUT"
+          echo "distribution_id=$DIST_ID" >> "$GITHUB_OUTPUT"
 
       - name: Sync website files to S3
         run: |
