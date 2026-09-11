@@ -46,12 +46,22 @@ jobs:
       - name: Get S3 bucket name from Terraform
         id: tf_outputs
         run: |
+          set -euo pipefail
           cd terraform
-          terraform init
-          BUCKET_NAME=$(terraform output -raw s3_bucket_name | head -n 1)
-          DIST_ID=$(terraform output -raw cloudfront_distribution_id | head -n 1)
-          echo "bucket_name=$BUCKET_NAME" >> "$GITHUB_OUTPUT"
-          echo "distribution_id=$DIST_ID" >> "$GITHUB_OUTPUT"
+          terraform init -reconfigure
+          terraform output -json > tf-output.json 2>/tmp/tf-output.err
+          python3 - <<'PY'
+import json
+import os
+from pathlib import Path
+
+with Path('tf-output.json').open() as f:
+    data = json.load(f)
+
+with Path(os.environ['GITHUB_OUTPUT']).open('a') as out:
+    out.write(f"bucket_name={data['s3_bucket_name']['value']}\n")
+    out.write(f"distribution_id={data['cloudfront_distribution_id']['value']}\n")
+PY
 
       - name: Sync website files to S3
         run: |
