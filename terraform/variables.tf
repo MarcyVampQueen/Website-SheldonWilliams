@@ -13,7 +13,7 @@ variable "aws_region" {
 variable "project_name" {
   description = "Project name for AWS resource naming."
   type        = string
-  default     = "sheldon-fitness"
+  default     = "sheldon-website"
 }
 
 variable "environment" {
