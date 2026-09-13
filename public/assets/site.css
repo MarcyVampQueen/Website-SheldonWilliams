@@ -3,14 +3,10 @@
 :root {
   --forest: #173c2d;
   --forest-deep: #0d271d;
-  --moss: #6c8065;
-  --sage: #dce4d5;
-  --lichen: #eef1e8;
   --cream: #f7f4eb;
   --paper: #fbfaf5;
-  --ink: #17201b;
-  --orange: #d96838;
   --beige: #f5f5d3;
+  --ink: #17201b;
   --line: rgba(23, 60, 45, 0.18);
   --shadow: 0 20px 60px rgba(16, 35, 26, 0.12);
 }
@@ -425,7 +421,7 @@ button { font: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
-  width: min(42vw, 340px);
+  width: min(42vw, 400px);
 }
 .contact-logo {
   display: block;
