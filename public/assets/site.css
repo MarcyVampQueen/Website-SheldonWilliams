@@ -7,14 +7,10 @@
   --sage: #dce4d5;
   --lichen: #eef1e8;
   --cream: #f7f4eb;
-  /* --cream: #bebe88; */
-  /* --paper: #fbfaf5; */
-  --paper: #bebe88;
+  --paper: #fbfaf5;
   --ink: #17201b;
   --orange: #d96838;
-  /* --yellow: #e6c94f; */
-  /* --yellow: #ab8e49; */
-  --yellow: #f5f5d3;
+  --beige: #f5f5d3;
   --line: rgba(23, 60, 45, 0.18);
   --shadow: 0 20px 60px rgba(16, 35, 26, 0.12);
 }
@@ -71,11 +67,11 @@ button { font: inherit; }
   text-decoration: none;
 }
 .nav-cta {
-  border: 1px solid var(--yellow);
+  border: 1px solid var(--beige);
   border-radius: 999px;
   padding: 9px 15px;
   font-weight: 600;
-  color: var(--yellow);
+  color: var(--beige);
 }
 .nav-toggle {
   display: none;
@@ -214,7 +210,7 @@ button { font: inherit; }
 .service-card h3 {
   margin: 0 0 9px;
   font-size: 1.13rem;
-  color: var(--yellow);
+  color: var(--beige);
 }
 
 .service-card--accent {
@@ -236,7 +232,7 @@ button { font: inherit; }
 .service-index {
   font-family: 'DM Mono', monospace;
   font-size: 0.72rem;
-  color: var(--yellow);
+  color: var(--beige);
 }
 .about-grid {
   display: grid;
@@ -274,7 +270,7 @@ button { font: inherit; }
 .quote {
   margin: 27px 0 0;
   padding-left: 17px;
-  border-left: 2px solid var(--yellow);
+  border-left: 2px solid var(--beige);
   font-weight: 600;
   font-size: 1.22rem;
   line-height: 1.35;
@@ -323,7 +319,7 @@ button { font: inherit; }
 }
 .reset-copy {
   padding: clamp(27px, 5vw, 58px);
-  background: var(--yellow);
+  background: var(--beige);
   color: var(--forest-deep);
   display: flex;
   flex-direction: column;
@@ -374,9 +370,9 @@ button { font: inherit; }
   align-self: flex-start;
 }
 .price-card--featured {
-  background: var(--yellow);
+  background: var(--beige);
   color: var(--forest-deep);
-  border-color: var(--yellow);
+  border-color: var(--beige);
   transform: translateY(-11px);
 }
 .price-card--featured p {
@@ -386,14 +382,14 @@ button { font: inherit; }
   display: inline-block;
   align-self: flex-start;
   padding: 5px 9px;
-  background: var(--yellow);
+  background: var(--beige);
   color: var(--forest-deep);
   font: 0.62rem 'DM Mono', monospace;
   text-transform: uppercase;
   letter-spacing: 0.06em;
 }
 .payment-band {
-  background: var(--yellow);
+  background: var(--beige);
   color: var(--forest-deep);
 }
 .payment-grid {
@@ -535,7 +531,7 @@ button { font: inherit; }
   margin: 0 0 12px;
   font-size: 3rem;
   line-height: 1;
-  color: var(--yellow);
+  color: var(--beige);
 }
 .testimonial-card p {
   margin: 0;
