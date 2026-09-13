@@ -425,7 +425,7 @@ button { font: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
-  width: min(24vw, 210px);
+  width: min(28vw, 250px);
 }
 .contact-logo {
   display: block;
