@@ -417,7 +417,7 @@ button { font: inherit; }
   flex: 1;
 }
 .contact-logo-wrap {
-  flex-shrink: 0;
+  flex: 0 1 400px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -428,8 +428,8 @@ button { font: inherit; }
   display: block;
   width: 100%;
   height: auto;
+  object-fit: contain;
   border-radius: 50%;
-  /* box-shadow: 0 18px 36px rgba(0, 0, 0, 0.18); */
 }
 .site-footer {
   display: flex;
@@ -454,45 +454,44 @@ button { font: inherit; }
   text-transform: uppercase;
 }
 .bio-section {
-  padding: clamp(64px, 9vw, 118px) 0;
+  padding: clamp(42px, 6vw, 76px) 0;
   border-top: 1px solid rgba(247, 244, 235, 0.2);
 }
 .bio-opening {
-  padding-top: clamp(62px, 8vw, 108px);
+  padding-top: clamp(50px, 7vw, 88px);
   border-top: 0;
 }
 .bio-opening-grid {
   display: grid;
-  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
-  gap: clamp(32px, 7vw, 90px);
+  grid-template-columns: minmax(0, 1.3fr) minmax(240px, 0.7fr);
+  gap: clamp(28px, 6vw, 72px);
   align-items: center;
 }
 .bio-opening h1,
 .bio-section-heading h2,
 .bio-story h2,
 .bio-cta h2 {
-  margin: 12px 0 20px;
-  font-size: clamp(2.8rem, 6vw, 6.3rem);
-  line-height: 0.96;
-  letter-spacing: -0.065em;
-  text-transform: uppercase;
+  margin: 10px 0 18px;
+  font-size: clamp(2rem, 3.6vw, 3.5rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  text-transform: none;
 }
 .bio-opening-copy > p:not(.eyebrow),
-.bio-story p:not(.eyebrow),
-.bio-section-heading > p:not(.eyebrow),
-.bio-cta-inner > p:not(.eyebrow) {
+.bio-story p,
+.bio-section-heading > p,
+.bio-cta-inner > p {
   max-width: 760px;
   color: #c5d3c3;
 }
 .bio-opening .bio-lead {
-  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  font-size: 1.15rem;
   color: var(--cream);
 }
 .bio-portrait {
   margin: 0;
-  position: relative;
-  border: 1px solid rgba(247, 244, 235, 0.25);
-  background: rgba(247, 244, 235, 0.05);
+  max-width: 400px;
+  justify-self: end;
 }
 .bio-portrait img {
   width: 100%;
@@ -501,48 +500,41 @@ button { font: inherit; }
   object-position: center 30%;
 }
 .bio-portrait figcaption {
-  padding: 12px 16px;
+  padding-top: 9px;
   font: 0.68rem 'DM Mono', monospace;
   text-transform: uppercase;
   color: var(--beige);
 }
 .bio-story-grid {
-  display: grid;
-  grid-template-columns: minmax(140px, 0.45fr) minmax(0, 1.55fr);
-  gap: clamp(28px, 7vw, 88px);
-}
-.bio-story-grid > .eyebrow {
-  color: var(--beige);
-  padding-top: 10px;
+  max-width: 900px;
+  margin: 0 auto;
 }
 .bio-story h2,
 .bio-section-heading h2,
 .bio-cta h2 {
-  max-width: 900px;
-}
-.bio-experience {
-  background: rgba(247, 244, 235, 0.035);
+  max-width: 800px;
 }
 .bio-section-heading {
   max-width: 900px;
-  margin-bottom: 36px;
+  margin: 0 auto 28px;
 }
 .bio-experience-grid,
 .bio-philosophy-grid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 14px;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  max-width: 900px;
+  margin: 0 auto;
 }
 .bio-panel,
 .bio-philosophy-grid article {
-  border: 1px solid rgba(247, 244, 235, 0.24);
-  padding: clamp(22px, 3vw, 32px);
+  padding: 0;
 }
 .bio-panel h3,
 .bio-philosophy-grid h3 {
-  margin: 18px 0 10px;
-  font-size: clamp(1.15rem, 1.8vw, 1.5rem);
-  line-height: 1.15;
+  margin: 0 0 10px;
+  font-size: 1.2rem;
+  line-height: 1.3;
   color: var(--beige);
 }
 .bio-panel p,
@@ -550,29 +542,19 @@ button { font: inherit; }
   margin: 0;
   color: #c5d3c3;
 }
-.bio-philosophy-grid article:nth-child(2) {
-  background: rgba(247, 244, 235, 0.04);
-}
 .bio-cta {
-  background: var(--beige);
-  color: var(--forest-deep);
+  padding-bottom: clamp(56px, 8vw, 100px);
 }
 .bio-cta-inner {
-  max-width: 1000px;
+  max-width: 900px;
+  margin: 0 auto;
 }
 .bio-cta-inner > p:not(.eyebrow) {
-  color: var(--forest-deep);
-}
-.bio-cta .eyebrow {
-  color: var(--forest);
+  color: #c5d3c3;
 }
 .bio-signoff {
   margin-top: 28px;
   font-size: 1.1rem;
-}
-.bio-cta .btn--solid {
-  background: var(--forest-deep);
-  color: var(--cream);
 }
 .detail-intro {
   max-width: 760px;
@@ -717,13 +699,9 @@ button { font: inherit; }
   .bio-portrait {
     max-width: 440px;
   }
-  .bio-experience-grid,
-  .bio-philosophy-grid {
-    grid-template-columns: 1fr;
-  }
-  .bio-story-grid {
-    grid-template-columns: 1fr;
-    gap: 14px;
+  .bio-portrait {
+    justify-self: start;
+    max-width: min(100%, 360px);
   }
   .contact-wrap {
     flex-direction: column;
@@ -733,6 +711,7 @@ button { font: inherit; }
     width: 100%;
   }
   .contact-logo-wrap {
+    flex-basis: auto;
     width: min(64vw, 320px);
     align-self: center;
   }
