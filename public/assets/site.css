@@ -421,7 +421,8 @@ button { font: inherit; }
   display: flex;
   align-items: center;
   justify-content: center;
-  width: min(42vw, 360px);
+  width: min(42vw, 400px);
+  max-width: 100%;
 }
 .contact-logo {
   display: block;
@@ -451,6 +452,127 @@ button { font: inherit; }
   line-height: 0.96;
   letter-spacing: -0.065em;
   text-transform: uppercase;
+}
+.bio-section {
+  padding: clamp(64px, 9vw, 118px) 0;
+  border-top: 1px solid rgba(247, 244, 235, 0.2);
+}
+.bio-opening {
+  padding-top: clamp(62px, 8vw, 108px);
+  border-top: 0;
+}
+.bio-opening-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+  gap: clamp(32px, 7vw, 90px);
+  align-items: center;
+}
+.bio-opening h1,
+.bio-section-heading h2,
+.bio-story h2,
+.bio-cta h2 {
+  margin: 12px 0 20px;
+  font-size: clamp(2.8rem, 6vw, 6.3rem);
+  line-height: 0.96;
+  letter-spacing: -0.065em;
+  text-transform: uppercase;
+}
+.bio-opening-copy > p:not(.eyebrow),
+.bio-story p:not(.eyebrow),
+.bio-section-heading > p:not(.eyebrow),
+.bio-cta-inner > p:not(.eyebrow) {
+  max-width: 760px;
+  color: #c5d3c3;
+}
+.bio-opening .bio-lead {
+  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
+  color: var(--cream);
+}
+.bio-portrait {
+  margin: 0;
+  position: relative;
+  border: 1px solid rgba(247, 244, 235, 0.25);
+  background: rgba(247, 244, 235, 0.05);
+}
+.bio-portrait img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: center 30%;
+}
+.bio-portrait figcaption {
+  padding: 12px 16px;
+  font: 0.68rem 'DM Mono', monospace;
+  text-transform: uppercase;
+  color: var(--beige);
+}
+.bio-story-grid {
+  display: grid;
+  grid-template-columns: minmax(140px, 0.45fr) minmax(0, 1.55fr);
+  gap: clamp(28px, 7vw, 88px);
+}
+.bio-story-grid > .eyebrow {
+  color: var(--beige);
+  padding-top: 10px;
+}
+.bio-story h2,
+.bio-section-heading h2,
+.bio-cta h2 {
+  max-width: 900px;
+}
+.bio-experience {
+  background: rgba(247, 244, 235, 0.035);
+}
+.bio-section-heading {
+  max-width: 900px;
+  margin-bottom: 36px;
+}
+.bio-experience-grid,
+.bio-philosophy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+.bio-panel,
+.bio-philosophy-grid article {
+  border: 1px solid rgba(247, 244, 235, 0.24);
+  padding: clamp(22px, 3vw, 32px);
+}
+.bio-panel h3,
+.bio-philosophy-grid h3 {
+  margin: 18px 0 10px;
+  font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+  line-height: 1.15;
+  color: var(--beige);
+}
+.bio-panel p,
+.bio-philosophy-grid p {
+  margin: 0;
+  color: #c5d3c3;
+}
+.bio-philosophy-grid article:nth-child(2) {
+  background: rgba(247, 244, 235, 0.04);
+}
+.bio-cta {
+  background: var(--beige);
+  color: var(--forest-deep);
+}
+.bio-cta-inner {
+  max-width: 1000px;
+}
+.bio-cta-inner > p:not(.eyebrow) {
+  color: var(--forest-deep);
+}
+.bio-cta .eyebrow {
+  color: var(--forest);
+}
+.bio-signoff {
+  margin-top: 28px;
+  font-size: 1.1rem;
+}
+.bio-cta .btn--solid {
+  background: var(--forest-deep);
+  color: var(--cream);
 }
 .detail-intro {
   max-width: 760px;
@@ -588,8 +710,31 @@ button { font: inherit; }
   .price-grid,
   .payment-grid,
   .about-grid,
-  .reset-card {
+  .reset-card,
+  .bio-opening-grid {
     grid-template-columns: 1fr;
+  }
+  .bio-portrait {
+    max-width: 440px;
+  }
+  .bio-experience-grid,
+  .bio-philosophy-grid {
+    grid-template-columns: 1fr;
+  }
+  .bio-story-grid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .contact-wrap {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .contact-copy {
+    width: 100%;
+  }
+  .contact-logo-wrap {
+    width: min(64vw, 320px);
+    align-self: center;
   }
   .payment-actions { justify-content: flex-start; }
   .site-footer { flex-direction: column; }
