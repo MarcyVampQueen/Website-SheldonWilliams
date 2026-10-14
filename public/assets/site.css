@@ -655,6 +655,7 @@ button { font: inherit; }
   .price-grid,
   .payment-grid,
   .about-grid,
+  .detail-grid,
   .reset-card {
     grid-template-columns: 1fr;
   }
