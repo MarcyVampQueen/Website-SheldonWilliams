@@ -160,7 +160,7 @@ button { font: inherit; }
 .btn--outline { border-color: currentColor; }
 .btn--solid { background: var(--forest); color: var(--cream); }
 .section {
-  padding: clamp(78px, 11vw, 145px) 0;
+  padding: clamp(78px, 11vw, 15px) 0;
   border-top: 1px solid rgba(247, 244, 235, 0.2);
 }
 .section-heading {
