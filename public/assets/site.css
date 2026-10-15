@@ -330,8 +330,12 @@ button { font: inherit; }
 }
 .reset-copy p {
   margin: 0;
+  margin-bottom: 4px;
   max-width: 390px;
   color: var(--forest-deep);
+}
+.reset-copy .btn + p {
+  margin-top: 20px;
 }
 .price-grid {
   display: grid;
