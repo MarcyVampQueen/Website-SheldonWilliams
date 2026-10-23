@@ -9,10 +9,10 @@ terraform {
   }
 
   backend "s3" {
-    bucket      = "sheldon-fitness-terraform-state"
-    key         = "prod/terraform.tfstate"
-    region      = "us-west-2"
-    encrypt     = true
+    bucket       = "sheldon-fitness-terraform-state"
+    key          = "prod/terraform.tfstate"
+    region       = "us-west-2"
+    encrypt      = true
     use_lockfile = true
   }
 }
@@ -120,10 +120,11 @@ resource "aws_cloudfront_origin_access_control" "website" {
 # ============================================================================
 
 resource "aws_acm_certificate" "website" {
-  count            = var.domain_name != "" ? 1 : 0
-  provider         = aws.us_east_1
-  domain_name      = var.domain_name
-  validation_method = "DNS"
+  count                     = var.domain_name != "" ? 1 : 0
+  provider                  = aws.us_east_1
+  domain_name               = var.domain_name
+  subject_alternative_names = ["www.${var.domain_name}"]
+  validation_method         = "DNS"
 
   lifecycle {
     create_before_destroy = true
@@ -163,7 +164,7 @@ resource "aws_route53_record" "cert_validation" {
 }
 
 resource "aws_acm_certificate_validation" "website" {
-  count      = var.domain_name != "" ? 1 : 0
+  count           = var.domain_name != "" ? 1 : 0
   certificate_arn = aws_acm_certificate.website[0].arn
 
   timeouts {
@@ -187,6 +188,7 @@ resource "aws_cloudfront_distribution" "website" {
   enabled             = true
   is_ipv6_enabled     = true
   default_root_object = "index.html"
+  aliases             = var.domain_name != "" ? [var.domain_name, "www.${var.domain_name}"] : []
 
   custom_error_response {
     error_code            = 404
@@ -213,9 +215,9 @@ resource "aws_cloudfront_distribution" "website" {
 
   viewer_certificate {
     cloudfront_default_certificate = var.domain_name == ""
-    acm_certificate_arn           = var.domain_name == "" ? null : aws_acm_certificate.website[0].arn
-    ssl_support_method            = var.domain_name == "" ? null : "sni-only"
-    minimum_protocol_version      = var.domain_name == "" ? null : "TLSv1.2_2021"
+    acm_certificate_arn            = var.domain_name == "" ? null : aws_acm_certificate.website[0].arn
+    ssl_support_method             = var.domain_name == "" ? null : "sni-only"
+    minimum_protocol_version       = var.domain_name == "" ? null : "TLSv1.2_2021"
   }
 
   tags = {
