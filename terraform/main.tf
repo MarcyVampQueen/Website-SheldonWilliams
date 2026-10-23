@@ -144,20 +144,20 @@ resource "aws_route53_zone" "website" {
   }
 }
 
-resource "aws_route53_record" "cert_validation" {
-  for_each = var.domain_name != "" ? {
-    for dvo in aws_acm_certificate.website[0].domain_validation_options : dvo.domain_name => {
-      name   = dvo.resource_record_name
-      record = dvo.resource_record_value
-      type   = dvo.resource_record_type
-    }
+locals {
+  certificate_validation_options = var.domain_name != "" ? {
+    for option in aws_acm_certificate.website[0].domain_validation_options : lower(option.domain_name) => option
   } : {}
+}
+
+resource "aws_route53_record" "cert_validation" {
+  for_each = var.domain_name != "" ? toset([lower(var.domain_name), "www.${lower(var.domain_name)}"]) : toset([])
 
   allow_overwrite = true
-  name            = each.value.name
-  records         = [each.value.record]
+  name            = local.certificate_validation_options[each.key].resource_record_name
+  records         = [local.certificate_validation_options[each.key].resource_record_value]
   ttl             = 60
-  type            = each.value.type
+  type            = local.certificate_validation_options[each.key].resource_record_type
   zone_id         = aws_route53_zone.website[0].zone_id
 
   depends_on = [aws_route53_zone.website]
