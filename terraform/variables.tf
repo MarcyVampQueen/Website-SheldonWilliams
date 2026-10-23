@@ -1,7 +1,7 @@
 variable "domain_name" {
   description = "Custom domain for the site. Leave empty to use the CloudFront default domain for preview/testing."
   type        = string
-  default     = "TheMovementProjectPDX.com"
+  default     = "themovementprojectpdx.com"
 }
 
 variable "aws_region" {
