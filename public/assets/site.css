@@ -226,7 +226,9 @@ button { font: inherit; }
   align-self: flex-start;
 }
 .service-index {
-  font-family: 'DM Mono', monospace;
+  font: 0.62rem 'DM Mono', monospace;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   font-size: 0.72rem;
   color: var(--beige);
 }
