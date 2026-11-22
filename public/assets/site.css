@@ -213,10 +213,13 @@ button { font: inherit; }
 }
 
 .service-card--accent {
-  background: rgba(230, 201, 79, 0.02);
-  border: 1px solid rgba(230, 201, 79, 0.18);
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
-  transform: translateY(-4px);
+  background: var(--beige);
+  color: var(--forest-deep);
+  border-color: var(--beige);
+  transform: translateY(-11px);
+}
+.service-card--accent h3 {
+  color: var(--forest-deep);
 }
 
 .service-card p {
@@ -224,9 +227,15 @@ button { font: inherit; }
   font-size: 0.91rem;
   color: #b8c9b7;
 }
+.service-card--accent p {
+  color: var(--forest-deep);
+}
 .service-card .btn {
   margin-top: 20px;
   align-self: flex-start;
+}
+.service-card--accent .btn {
+  margin-top: auto;
 }
 .service-index {
   font: 0.62rem 'DM Mono', monospace;
